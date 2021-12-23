@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!-- required if opening locally -->
+    <script src="./processed_data.js"></script>
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon">
+    <title>Simulation Page</title>
+    <style>
+        #f1,
+        #f2,
+        #f3,
+        #f4,
+        #f5,
+        #f6,
+        #f7 {
+            transition: border 0.2s ease-in-out;
+        }
+
+        #f1:hover {
+            border: 2px #a349a4 solid;
+        }
+
+        #f2:hover {
+            border: 2px #3f48cc solid;
+        }
+
+        #f3:hover {
+            border: 2px #99d9ea solid;
+        }
+
+        #f4:hover {
+            border: 2px #efe4b0 solid;
+        }
+
+        #f5:hover {
+            border: 2px #c3c3c3 solid;
+        }
+
+        #f6:hover {
+            border: 2px #ff7f27 solid;
+        }
+
+        #f7:hover {
+            border: 2px #ed1c24 solid;
+        }
+
+        #loading {
+            background: url('images/spinner.gif') no-repeat center center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 9999999;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-lg" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">HALF SUBTRACTOR</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./theory.html">Theory</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="./simulation.html">Simulation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./fault_detector.html">Fault Detector</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./about.html" aria-current="page">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <a href="#howto" class="link-primary m-0 p-0">View Procedure</a>
+
+    <h3 class="display-5 text-center">Simulation of the SA0 and the SA1 faults</h3>
+    <div class="container pt-4">
+        <form>
+
+            <div class="row g-2">
+                <div class="col-md">
+                    <div class="form-floating">
+                        <select class="form-select" id="f1" aria-label="Fault point-1">
+                            <option selected value="1">No Fault</option>
+                            <option value="2">SA0</option>
+                            <option value="3">SA1</option>
+                        </select>
+                        <label for="floatingSelectGrid">Fault point 1</label>
+                    </div>
+                </div>
+
+                <div class="col-md">
+                    <div class="form-floating">
+                        <select class="form-select" id="f2" aria-label="Fault point-2">
+                            <option selected value="1">No Fault</option>
+                            <option value="2">SA0</option>
+                            <option value="3">SA1</option>
+                        </select>
+                        <label for="floatingSelectGrid">Fault point 2</label>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-floating">
+                        <select class="form-select" id="f3" aria-label="Fault point-3">
+                            <option selected value="1">No Fault</option>
+                            <option value="2">SA0</option>
+                            <option value="3">SA1</option>
+                        </select>
+                        <label for="floatingSelectGrid">Fault point 3</label>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-floating">
+                        <select class="form-select" id="f4" aria-label="Fault point-4">
+                            <option selected value="1">No Fault</option>
+                            <option value="2">SA0</option>
+                            <option value="3">SA1</option>
+                        </select>
+                        <label for="floatingSelectGrid">Fault point 4</label>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-floating">
+                        <select class="form-select" id="f5" aria-label="Fault point-5">
+                            <option selected value="1">No Fault</option>
+                            <option value="2">SA0</option>
+                            <option value="3">SA1</option>
+                        </select>
+                        <label for="floatingSelectGrid">Fault point 5</label>
+                    </div>
+                </div>
+
+                <div class="col-md">
+                    <div class="form-floating">
+                        <select class="form-select" id="f6" aria-label="Fault point-6">
+                            <option selected value="1">No Fault</option>
+                            <option value="2">SA0</option>
+                            <option value="3">SA1</option>
+                        </select>
+                        <label for="floatingSelectGrid">Fault point 6</label>
+                    </div>
+                </div>
+
+                <div class="col-md">
+                    <div class="form-floating">
+                        <select class="form-select" id="f7" aria-label="Fault point-7">
+                            <option selected value="1">No Fault</option>
+                            <option value="2">SA0</option>
+                            <option value="3">SA1</option>
+                        </select>
+                        <label for="floatingSelectGrid">Fault point 7</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <p class="text-center mt-4"><button type="button" id="btn-tt" class="btn btn-primary">View Truth
+                    Table</button>
+            </p>
+
+        </form>
+
+        <div class="row pt-4">
+            <div class="col-md-6 col-xs-12">
+                <!--<img src="./images/HS_faults_legend.jpg" width="100%" alt="sa0_fault_HS">-->
+                <img src="./images/sim_img.png" id="sim_img" style="display: none;" width="100%" alt="sa0_fault_HS">
+                <canvas id="sim_canvas" width="552px" height="234px"></canvas>
+            </div>
+
+            <div class="col-md-6 col-xs-12">
+                <div class="card">
+                    <div class="card-header">
+                        Truth Table
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>A</th>
+                                    <th>B</th>
+                                    <th>D</th>
+                                    <th>B<sub>out</sub></th>
+                                </tr>
+                                <thead>
+                                <tbody>
+                                    <tr id="tt-row-1">
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr id="tt-row-2">
+                                        <td>0</td>
+                                        <td>1</td>
+                                        <td>1</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr id="tt-row-3">
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr id="tt-row-4">
+                                        <td>1</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                    </tr>
+                                </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <p class="mt-4">
+            We have created a Verilog module and obtained the truth tables for various locations of SA0 and SA1 faults
+            and got the <a href="./raw_data.txt" class="link-info" target="_blank">raw data</a>.We then converted this
+            to JSON format and wrote the javascript logic to display the above simulation.
+        </p>
+
+        <h1 class="display-6" id="howto"><u>Procedure</u></h1>
+        <p class="lead">
+            The above simulation can be used to add faults at certain points in the circuit and observe the output.
+            Each dropdown input corresponding to particular fault point in the circuit. We can select the state of the
+            point.
+            Each point can either have NO FAULT(NF) or be Stuck-at-0(SA0) or Stuck-at-1(SA1).
+        <ul>
+            <li>From the drop down box select the requires state of each point.</li>
+            <li>Click on "View Truth Table" button to generate the truth table corresponding to the input fault pattern.
+            </li>
+            <li>You can also see the image where the corresponding fault points are marked</li>
+        </ul>
+        </p>
+        <p class="text-center">
+    <a type="button" class="btn btn-primary" href="./fault_detector.html">Link to Fault Detector</a>
+        </p>
+    </div>
+    <div id="loading" style="display: none;"></div>
+    <script>
+        const position = {
+            f1: { x: 60, y: 35, color: '#a349a4' },
+            f2: { x: 215, y: 35, color: '#3f48cc' },
+            f3: { x: 105, y: -102, color: '#99d9ea' },
+            f4: { x: 227, y: 120, color: '#efe4b0' },
+            f5: { x: 98, y: -50, color: '#c3c3c3' },
+            f6: { x: 166, y: 110, color: '#ff7f27' },
+            f7: { x: 165, y: 203, color: '#ed1c24' }
+        }
+        let loader = {};
+        window.addEventListener('load', (event) => {
+            const button = document.querySelector("#btn-tt");
+            button.addEventListener('click', changeTruthTable);
+
+            let canvas = document.querySelector("#sim_canvas");
+            let ctx = canvas.getContext("2d");
+
+            let img = document.querySelector("#sim_img");
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            loader = {
+                show: () => { document.querySelector("#loading").style.display = 'block' },
+                hide: () => { document.querySelector("#loading").style.display = 'none' }
+            }
+        });
+
+        function isEqual(x, y) {
+            for (let j = 1; j <= 7; j++) {
+                if (parseInt(x["f" + j]) != parseInt(y["f" + j]) + 1) {
+                    return false
+                }
+            }
+            return true;
+        }
+
+        function tr_templete(data) {
+            return `
+                <td>${data[0]}</td>
+                <td>${data[1]}</td>
+                <td>${data[2]}</td>
+                <td>${data[3]}</td>
+            `
+        }
+
+        function truthTable(table) {
+            document.querySelector("#tt-row-1").innerHTML = tr_templete(table.truth_table.row_1);
+            document.querySelector("#tt-row-2").innerHTML = tr_templete(table.truth_table.row_2);
+            document.querySelector("#tt-row-3").innerHTML = tr_templete(table.truth_table.row_3);
+            document.querySelector("#tt-row-4").innerHTML = tr_templete(table.truth_table.row_4);
+        }
+
+        function canvas_img(fault) {
+            let canvas = document.querySelector("#sim_canvas");
+            let ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            let img = document.querySelector("#sim_img");
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            msg = {}
+            for (const f in fault) {
+                if (fault[f] == 1)
+                    msg[f] = { text: "NF", color: "#959595" }
+                else if (fault[f] == 2)
+                    msg[f] = { text: "SA0", color: "#c10012" }
+                else if (fault[f] == 3)
+                    msg[f] = { text: "SA1", color: "#19ff0a" }
+            }
+
+            ctx.font = "18px Arial";
+            ctx.fillStyle = msg.f1.color;
+            ctx.fillText(msg.f1.text, position.f1.x, position.f1.y);
+
+            ctx.fillStyle = msg.f2.color;
+            ctx.fillText(msg.f2.text, position.f2.x, position.f2.y);
+
+            ctx.rotate(90 * Math.PI / 180);
+            ctx.fillStyle = msg.f3.color;
+            ctx.fillText(msg.f3.text, position.f3.x, position.f3.y);
+            ctx.rotate(-90 * Math.PI / 180);
+
+            ctx.fillStyle = msg.f4.color;
+            ctx.fillText(msg.f4.text, position.f4.x, position.f4.y);
+
+            ctx.rotate(90 * Math.PI / 180);
+            ctx.fillStyle = msg.f5.color;
+            ctx.fillText(msg.f5.text, position.f5.x, position.f5.y);
+            ctx.rotate(-90 * Math.PI / 180);
+
+            ctx.fillStyle = msg.f6.color;
+            ctx.fillText(msg.f6.text, position.f6.x, position.f6.y);
+
+            ctx.fillStyle = msg.f7.color;
+            ctx.fillText(msg.f7.text, position.f7.x, position.f7.y);
+
+        }
+
+        async function changeTruthTable(e) {
+            loader.show();
+
+            let i, j, result;
+            let faults = {};
+            for (i = 1; i <= 7; i++) {
+                faults["f" + i] = document.querySelector("#f" + i).value;
+            }
+
+            // required if opening locally
+            if (window.hasOwnProperty('PROCESSED_DATA_ARRAY')) {
+                result = PROCESSED_DATA_ARRAY;
+            }
+            else {
+                let fetch_json = await fetch('/result.json');
+                let json_text = await fetch_json.text();
+                result = JSON.parse(json_text);
+            }
+
+            console.log(result.length);
+            for (i = 0; (i < result.length); i++) {
+                if (isEqual(faults, result[i])) {
+                    console.log(result[i]);
+                    truthTable(result[i]);
+                    break;
+                }
+            }
+
+            canvas_img(faults);
+            loader.hide();
+        }
+    </script>
+</body>
+
+</html>

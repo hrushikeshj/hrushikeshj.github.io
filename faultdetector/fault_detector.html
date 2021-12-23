@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!-- required if opening locally -->
+    <script src="./processed_data.js"></script>
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon">
+    <title>Simulation Page</title>
+    <style>
+        .form-control{
+            width: 100px ;
+            margin: 0px !important;
+        }
+        #loading {
+        background: url('images/spinner.gif') no-repeat center center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 9999999;
+    }
+    .SA0{
+        color: red;
+    }
+    .SA1{
+        color: green;
+    }
+    .NF{
+        color: #000;
+    }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-lg" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">HALF SUBTRACTOR</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./theory.html">Theory</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./simulation.html">Simulation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="./fault_detector.html">Fault Detector</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./about.html" aria-current="page">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <a href="#howto" class="link-primary m-0 p-0">View Procedure</a>
+
+    <div class="container pt-4">
+        <h3 class="display-5 text-center">Fault Detector</h3>
+        <div class="row pt-4">
+            <div class="col-md-6 col-xs-12 mb-1">
+                <div class="card">
+                    <div class="card-header">
+                        Enter the faulty output
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>A</th>
+                                    <th>B</th>
+                                    <th>D</th>
+                                    <th>B<sub>out</sub></th>
+                                </tr>
+                                <thead>
+                                <tbody>
+                                    <tr id="tt-row-1">
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td><input class="form-control" id="d1" type="number" min="0" max="1" placeholder=""></td>
+                                        <td><input class="form-control" id="b1" type="number" min="0" max="1" placeholder=""></td>
+                                    </tr>
+                                    <tr id="tt-row-2">
+                                        <td>0</td>
+                                        <td>1</td>
+                                        <td><input class="form-control" id="d2" type="number" min="0" max="1" placeholder=""></td>
+                                        <td><input class="form-control" id="b2" type="number" min="0" max="1" placeholder=""></td>
+                                    </tr>
+                                    <tr id="tt-row-3">
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td><input class="form-control" id="d3" type="number" min="0" max="1" placeholder=""></td>
+                                        <td><input class="form-control" id="b3" type="number" min="0" max="1" placeholder=""></td>
+                                    </tr>
+                                    <tr id="tt-row-4">
+                                        <td>1</td>
+                                        <td>1</td>
+                                        <td><input class="form-control" id="d4" type="number" min="0" max="1" placeholder=""></td>
+                                        <td><input class="form-control" id="b4" type="number" min="0" max="1" placeholder=""></td>
+                                    </tr>
+                                </tbody>
+                        </table>
+                    </div>
+                    <p class="text-center"><button type="button" id="btn-tt" class="btn btn-primary">Find Fault</button>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xs-12">
+                <!--<img src="./images/HS_faults_legend.jpg" width="100%" alt="sa0_fault_HS">--> 
+                <img src="./images/sim_img.png" id= "sim_img" style="display: none;" width="100%" alt="sa0_fault_HS">
+                <div class="card">
+                    <div class="card-header">
+                        Possible Faults
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Si.no</th>
+                                    <th>Circuit</th>
+                                    <th>F1</th>
+                                    <th>F2</th>
+                                    <th>F3</th>
+                                    <th>F4</th>
+                                    <th>F5</th>
+                                    <th>F6</th>
+                                    <th>F7</th>
+                                </tr>
+                                <thead>
+                                <tbody id="pf">
+                                    
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h1 class="display-6" id="howto"><u>Procedure</u></h1>
+        <p class="lead">
+            The above simulation can be used to detect possible faults in a half subtractor circuit.
+            If you have a faulty physical circuit and you can obtain its truth table(faulty) then with the help of this fault detector you can obtain the possible faults in the circuit.
+        </p>
+        <p class="lead">Then you can also click on the "View" button to view the corresponding visual representation of the fault combinations in the circuit</p>
+        <p class="lead">This can be used as a diagnostic tool.</p>
+        <ul>
+            <li>Fill the above faulty truth table</li>
+            <li>Click on "Find Faults" button to generate the table of possible fault combinations.
+            </li>
+            <li>Click on the "View" button to view the corresponding circuit with fault</li>
+        </ul>
+        <img src="/images/HS_fault_point_names.png" alt="fault_point_names">
+    </div>
+    <div id="loading" style="display: none;"></div>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Circuit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="display: flex;justify-content: center;">
+                <img src="./images/sim_img.png" id= "sim_img" style="display: none;" width="100%" alt="sa0_fault_HS">
+                <canvas id="sim_canvas" width="552px" height="234px"></canvas>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        const position = {
+            f1: {x: 60, y: 35, color: '#a349a4'},
+            f2: {x: 215, y: 35, color: '#3f48cc'},
+            f3: {x: 105, y: -102, color: '#99d9ea'},
+            f4: {x: 227, y: 120, color: '#efe4b0'},
+            f5: {x: 98, y: -50, color: '#c3c3c3'},
+            f6: {x: 166, y: 110, color: '#ff7f27'},
+            f7: {x: 165, y: 203, color: '#ed1c24'}
+        }
+
+        let loader = {};
+        window.addEventListener('load', (event) => {
+            loader ={
+                show: () => {document.querySelector("#loading").style.display = 'block'},
+                hide: () => {document.querySelector("#loading").style.display = 'none'}
+            }
+
+            const button = document.querySelector("#btn-tt");
+            button.addEventListener('click', findFault);
+
+            document.addEventListener('click',function(e){
+                if(e.target && e.target.getAttribute("data-bs-toggle") == "modal"){
+                    //console.log(e.target.getAttribute('data-bs-id'))
+                    show_canvas(e.target.getAttribute('data-bs-id'));
+                }
+            });
+        });
+
+        function show_canvas(id){
+            let row = document.querySelector("#"+id);
+            let f, faults={};
+            for(let i=1; i<=7; i++){
+                f = row.querySelector(`td[fault=f${i}]`);
+                faults["f"+i] = f.getAttribute("fault-data");
+            }
+            //console.log(faults)
+            canvas_img(faults);
+        }
+
+        function readable_faults(faults){
+            let f = {}, n;
+            for(let i = 1; i<=7; i++){
+                n = "f"+i;
+                if(faults[n] == 0)
+                    f[n] = "NF"
+                else if(faults[n] == 1)
+                    f[n] = "SA0"
+                else if(faults[n] == 2)
+                    f[n] = "SA1"
+            }
+            return f;
+        }
+
+        function tr_templete(si_no, faults){
+            let f = readable_faults(faults);
+            return `<tr id="tr${si_no}">
+                <td>${si_no}</td>
+                <td><button type="button" class="btn btn-info" data-bs-id="tr${si_no}" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button></td>
+                <td fault="f1" fault-data="${faults.f1}" class="${f.f1}">${f.f1}</td>
+                <td fault="f2" fault-data="${faults.f2}" class="${f.f2}">${f.f2}</td>
+                <td fault="f3" fault-data="${faults.f3}" class="${f.f3}">${f.f3}</td>
+                <td fault="f4" fault-data="${faults.f4}" class="${f.f4}">${f.f4}</td>
+                <td fault="f5" fault-data="${faults.f5}" class="${f.f5}">${f.f5}</td>
+                <td fault="f6" fault-data="${faults.f6}" class="${f.f6}">${f.f6}</td>
+                <td fault="f7" fault-data="${faults.f7}" class="${f.f7}">${f.f7}</td>
+            </tr>`
+        }
+
+        function isEqualArray(res, input){
+            if((res[2] == input[0]) && (res[3] == input[1]))
+                return true;
+            else
+                return false;
+        }
+
+        function isEquaulTable(table, row1, row2, row3, row4){
+            if(isEqualArray(table.row_1, row1) && isEqualArray(table.row_2, row2) && isEqualArray(table.row_3, row3) && isEqualArray(table.row_4, row4))
+                return true;
+            else
+                return false;
+        }
+
+        function appendTbody(html){
+            let tbody = document.querySelector("#pf")
+            if(html != "")
+                tbody.innerHTML = html;
+            else
+                tbody.innerHTML = `<tr><td colspan="9" style="text-align: center;">Not Found</td></tr>`;
+    
+            loader.hide();
+        }
+
+        async function findFault(){
+            loader.show();
+
+            let row1 = [], row2 = [], row3 = [], row4 = [], i, j, valid = true, result, possible_faluts = [];
+
+            row1.push(document.querySelector("#d1").value);
+            row1.push(document.querySelector("#b1").value);
+
+            row2.push(document.querySelector("#d2").value);
+            row2.push(document.querySelector("#b2").value);
+            
+            row3.push(document.querySelector("#d3").value);
+            row3.push(document.querySelector("#b3").value);
+
+            row4.push(document.querySelector("#d4").value);
+            row4.push(document.querySelector("#b4").value);
+
+            console.log(row1);
+            console.log(row2);
+            console.log(row3);
+            console.log(row4);
+
+            for(i = 0; (i < 2) && valid; i++){
+                for(j = 1; (j <=4) && valid; j++){
+                    let ele = eval('row'+j)[i];
+                    console.log(ele);
+                    if((ele != '0') && (ele != '1')){
+                        alert("Invalid input "+ " "+ j+ " "+ i);
+                        valid = false
+                    }
+                }
+            }
+
+            if(window.hasOwnProperty('PROCESSED_DATA_ARRAY')){
+                result = PROCESSED_DATA_ARRAY;
+            }
+            else{
+                let fetch_json = await fetch('/result.json');
+                let json_text = await fetch_json.text();
+                result = JSON.parse(json_text);   
+            }
+
+            console.log(result.length);
+            for(i = 0; (i < result.length); i++){
+                if(isEquaulTable(result[i].truth_table, row1, row2, row3, row4)){
+                    //console.log(result[i]);
+                    possible_faluts.push(result[i]);
+                }
+            }
+            console.log(possible_faluts);
+
+            let innerHTML = "";
+            for(i=0; i<possible_faluts.length;i++){
+                innerHTML += tr_templete(i+1, possible_faluts[i]);
+            }
+            appendTbody(innerHTML);
+
+        }
+
+        function canvas_img(fault){
+            let canvas = document.querySelector("#sim_canvas");
+            let ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            let img = document.querySelector("#sim_img");
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            msg = {}
+            for (const f in fault) {
+                if(fault[f] == 0)
+                    msg[f] = {text: "NF", color: "#959595"}
+                else if(fault[f] == 1)
+                    msg[f] = {text: "SA0", color: "#c10012"}
+                else if(fault[f] == 2)
+                    msg[f] = {text: "SA1", color: "#19ff0a"}
+            }
+
+            ctx.font = "18px Arial";
+            ctx.fillStyle = msg.f1.color;
+            ctx.fillText(msg.f1.text, position.f1.x, position.f1.y);
+
+            ctx.fillStyle = msg.f2.color;
+            ctx.fillText(msg.f2.text, position.f2.x, position.f2.y);
+
+            ctx.rotate(90*Math.PI / 180);
+            ctx.fillStyle = msg.f3.color;
+            ctx.fillText(msg.f3.text, position.f3.x, position.f3.y);
+            ctx.rotate(-90*Math.PI / 180);
+
+            ctx.fillStyle = msg.f4.color;
+            ctx.fillText(msg.f4.text, position.f4.x, position.f4.y);
+
+            ctx.rotate(90*Math.PI / 180);
+            ctx.fillStyle = msg.f5.color;
+            ctx.fillText(msg.f5.text, position.f5.x, position.f5.y);
+            ctx.rotate(-90*Math.PI / 180);
+
+            ctx.fillStyle = msg.f6.color;
+            ctx.fillText(msg.f6.text, position.f6.x, position.f6.y);
+
+            ctx.fillStyle = msg.f7.color;
+            ctx.fillText(msg.f7.text, position.f7.x, position.f7.y);
+
+        }
+    </script>
+</body>
+
+</html>
