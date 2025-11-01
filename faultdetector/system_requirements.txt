@@ -1,3 +1,0 @@
-* Use the latest version of any modern browser with internet connectivity for the bootstrap libraries.
-* Please enable Javascript in your browser, disable any ad-blockers and also allow third party cookies
-* Best viewed at resolution 1080px X 720px 
