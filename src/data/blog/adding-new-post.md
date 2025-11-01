@@ -18,7 +18,7 @@ Here are some rules/recommendations, tips & ticks for creating new posts in Astr
 <figure>
   <img
     src="https://images.pexels.com/photos/159618/still-life-school-retro-ink-159618.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    alt="Free Classic wooden desk with writing materials, vintage clock, and a leather bag. Stock Photo"
+    alt="Free Classic wooden desk with writing materials, vintage clock, and a leather bag. Stock Photo-new"
   />
     <figcaption class="text-center">
     Photo by <a href="https://www.pexels.com/photo/brown-wooden-desk-159618/">Pixabay</a>
